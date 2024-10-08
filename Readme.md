@@ -1,6 +1,6 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Евгений Тимофеев](https://up.htmlacademy.ru/nodejs-api-individual/1/user/948939).
+* Студенд: [Евгений Тимофеев](https://up.htmlacademy.ru/nodejs-api-individual/1/user/948939).
 * Наставник: [Евгений Наумов](https://github.com/NaumovEvgeniy).
 
 ---
