@@ -12,8 +12,8 @@ export function getRandomItem<T>(items: T[]):T {
   return items[generateRandomValue(0, items.length - 1)];
 }
 
-export function getRandomBoolean(): Boolean {
-  return getRandomItem<Boolean>([true, false]);
+export function getRandomBoolean(): boolean {
+  return getRandomItem<boolean>([true, false]);
 }
 
 export function getErrorMessage(error: unknown): string {

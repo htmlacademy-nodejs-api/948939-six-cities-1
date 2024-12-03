@@ -1,6 +1,6 @@
 export type MockCity = {
   name: string;
-  latitude:  number;
+  latitude: number;
   longitude: number;
 }
 

@@ -18,13 +18,13 @@ export class TSVOfferGenerator implements OfferGenerator {
     const description = getRandomItem<string>(this.mockData.descriptions);
 
     const createdAt = dayjs()
-    .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
-    .toISOString();
+      .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
+      .toISOString();
 
     const cityObj = getRandomItem<MockCity>(this.mockData.cities);
-    const city = cityObj.name
-    const cityLatitude = cityObj.latitude
-    const cityLongitude = cityObj.longitude
+    const city = cityObj.name;
+    const cityLatitude = cityObj.latitude;
+    const cityLongitude = cityObj.longitude;
 
     const previewImage = getRandomItem<string>(this.mockData.photos);
     const images = getRandomItems<string>(this.mockData.photos).join(',');
