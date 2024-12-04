@@ -16,9 +16,10 @@ export class HelpCommand implements Command {
     ${logText('Пример:')}
     \t${logCommand('cli.js --<command> [--arguments]')}
     ${logText('Команды:')}
-    \t${logCommand('--version')}:\t\t${logCommandDescription('# выводит номер версии')}
-    \t${logCommand('--help')}:\t\t\t${logCommandDescription('# печатает этот текст')}
-    \t${logCommand('--import <path>')}:\t${logCommandDescription('# импортирует данные из TSV')}
+    \t${logCommand('--version')}:\t\t\t\t${logCommandDescription('# выводит номер версии')}
+    \t${logCommand('--help')}:\t\t\t\t\t${logCommandDescription('# печатает этот текст')}
+    \t${logCommand('--import <path>')}:\t\t\t${logCommandDescription('# импортирует данные из TSV')}
+    \t${logCommand('--generate <count> <path> <url>')}:\t${logCommandDescription('# получает данные из <url>, генерирует <count> предложений и сохраняет в файл <path>')}
     `);
   }
 }

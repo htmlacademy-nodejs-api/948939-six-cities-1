@@ -12,9 +12,16 @@
     "start": "npm run build && node ./dist/main.js",
     "build": "npm run clean && npm run compile",
     "lint": "eslint src/ --ext .ts",
+    "lint:fix": "npm run lint -- --fix",
     "compile": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
-    "ts": "tsc --noEmit && node --no-warnings=--no-warnings=ExperimentalWarning --loader ts-node/esm"
+    "ts": "tsc --noEmit && node --no-warnings=--no-warnings=ExperimentalWarning --loader ts-node/esm",
+    "version": "npm run ts  ./src/main.cli.ts -- --version",
+    "help": "npm run ts  ./src/main.cli.ts -- --help",
+    "import:default": "npm run ts  ./src/main.cli.ts -- --import ./mocks/mock-data.tsv",
+    "import:generated": "npm run ts  ./src/main.cli.ts -- --import ./mocks/generated-mock.tsv",
+    "mock:server": "json-server ./mocks/mock-server-data.json --port 3123",
+    "generate": "npm run ts  ./src/main.cli.ts -- --generate 300 ./mocks/generated-mock.tsv http://localhost:3123/api"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
@@ -30,5 +37,11 @@
   "engines": {
     "node": "^20.0.0",
     "npm": ">=10"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13",
+    "generate-password": "^1.7.1",
+    "got": "13.0.0",
+    "json-server": "^1.0.0-beta.3"
   }
 }
