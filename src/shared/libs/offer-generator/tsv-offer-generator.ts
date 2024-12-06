@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { OfferGenerator } from './offer-generator.interface.js';
 import { MockServerData, MockCity, OfferType, UserType } from '../../types/index.js';
-import { generateRandomValue, getRandomItem, getRandomItems, getRandomBoolean } from '../../helpers/common.js';
+import { generateRandomValue, getRandomItem, getRandomItems, getRandomBoolean } from '../../helpers/index.js';
 import generator from 'generate-password';
 
 const MIN_PRICE = 500;
