@@ -19,8 +19,8 @@
     "ts": "tsc --noEmit && node --no-warnings=--no-warnings=ExperimentalWarning --loader ts-node/esm",
     "version": "npm run ts  ./src/main.cli.ts -- --version",
     "help": "npm run ts  ./src/main.cli.ts -- --help",
-    "import:default": "npm run ts  ./src/main.cli.ts -- --import ./mocks/mock-data.tsv admin test localhost six-cities qwerty",
-    "import:generated": "npm run ts  ./src/main.cli.ts -- --import ./mocks/generated-mock.tsv admin test localhost six-cities qwerty",
+    "import:default": "npm run ts  ./src/main.cli.ts -- --import ./mocks/mock-data.tsv",
+    "import:generated": "npm run ts  ./src/main.cli.ts -- --import ./mocks/generated-mock.tsv",
     "mock:server": "json-server ./mocks/mock-server-data.json --port 3123",
     "generate": "npm run ts  ./src/main.cli.ts -- --generate 300 ./mocks/generated-mock.tsv http://localhost:3123/api"
   },

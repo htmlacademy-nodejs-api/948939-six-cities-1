@@ -1,30 +1,28 @@
 import { Command } from './command.interface.js';
 import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
-import { DatabaseClient, MongoDatabaseClient } from '../../shared/libs/database-client/index.js';
-import { DefaultOfferService, OfferModel, OfferService } from '../../shared/modules/offer/index.js';
-import { DefaultUserService, UserModel, UserService } from '../../shared/modules/user/index.js';
-import { ConsoleLogger } from '../../shared/libs/logger/console.logger.js';
+import { DatabaseClient } from '../../shared/libs/database-client/index.js';
+import { OfferService } from '../../shared/modules/offer/index.js';
+import { UserService } from '../../shared/modules/user/index.js';
 import { Logger } from '../../shared/libs/logger/index.js';
 import { createOffer, getMongoURI } from '../../shared/helpers/index.js';
 import { Offer } from './../../shared/types/index.js';
-import { DEFAULT_DB_PORT } from './command.constant.js';
 import { getErrorMessage } from '../../shared/helpers/index.js';
+import { Component } from '../../shared/types/index.js';
+import { Config, RestSchema } from '../../shared/libs/config/index.js';
+import { inject, injectable } from 'inversify';
 
+@injectable()
 export class ImportCommand implements Command {
-  private userService: UserService;
-  private offerService: OfferService;
-  private databaseClient: DatabaseClient;
-  private logger: Logger;
-  private salt: string;
 
-  constructor() {
+  constructor(
+    @inject(Component.Logger) private readonly logger: Logger,
+    @inject(Component.Config) private readonly config: Config<RestSchema>,
+    @inject(Component.OfferService) private readonly offerService: OfferService,
+    @inject(Component.UserService) private readonly userService: UserService,
+    @inject(Component.DatabaseClient) private readonly databaseClient: DatabaseClient,
+  ) {
     this.onImportedLine = this.onImportedLine.bind(this);
     this.onCompleteImport = this.onCompleteImport.bind(this);
-
-    this.logger = new ConsoleLogger();
-    this.offerService = new DefaultOfferService(this.logger, OfferModel);
-    this.userService = new DefaultUserService(this.logger, UserModel);
-    this.databaseClient = new MongoDatabaseClient(this.logger);
   }
 
   private async onImportedLine(line: string, resolve: () => void) {
@@ -34,12 +32,12 @@ export class ImportCommand implements Command {
   }
 
   private onCompleteImport(count: number) {
-    console.info(`${count} rows imported.`);
+    this.logger.info(`${count} rows imported.`);
     this.databaseClient.disconnect();
   }
 
   private async saveOffer(offer: Offer) {
-    const user = await this.userService.findOrCreate({...offer.author}, this.salt);
+    const user = await this.userService.findOrCreate({...offer.author}, this.config.get('SALT'),);
 
     await this.offerService.create({
       author: user.id,
@@ -68,9 +66,15 @@ export class ImportCommand implements Command {
     return '--import';
   }
 
-  public async execute(filename: string, login: string, password: string, host: string, dbname: string, salt: string): Promise<void> {
-    const uri = getMongoURI(login, password, host, DEFAULT_DB_PORT, dbname);
-    this.salt = salt;
+  public async execute(filename: string): Promise<void> {
+
+    const uri = getMongoURI(
+      this.config.get('DB_USER'),
+      this.config.get('DB_PASSWORD'),
+      this.config.get('DB_HOST'),
+      this.config.get('DB_PORT'),
+      this.config.get('DB_NAME')
+    );
 
     await this.databaseClient.connect(uri);
 
@@ -82,8 +86,8 @@ export class ImportCommand implements Command {
     try {
       await fileReader.read();
     } catch (error) {
-      console.error(`Can't import data from file: ${filename}`);
-      console.error(getErrorMessage(error));
+      this.logger.error(`Can't import data from file: ${filename}`, error as Error);
+      this.logger.error(getErrorMessage(error), error as Error);
     }
   }
 }
