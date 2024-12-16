@@ -1,10 +1,12 @@
 import { Command } from './command.interface.js';
 import chalk from 'chalk';
+import { injectable } from 'inversify';
 
 const logText = (text: string) => chalk.green(text);
 const logCommand = (text: string) => chalk.yellow(text);
 const logCommandDescription = (text: string) => chalk.blue(text);
 
+@injectable()
 export class HelpCommand implements Command {
   public getName(): string {
     return '--help';

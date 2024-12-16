@@ -4,18 +4,29 @@ import {
   HelpCommand,
   ImportCommand,
   VersionCommand,
-  GenerateCommand
+  GenerateCommand,
+  createCliApplicationContainer
 } from './cli/index.js';
+import { createUserContainer } from './shared/modules/user/index.js';
+import { createOfferContainer } from './shared/modules/offer/index.js';
+
+import { Container } from 'inversify';
+import { Component } from './shared/types/index.js';
 
 function bootstrap() {
-  const cliApplication = new CLIApplication();
-  cliApplication.registerCommands([
-    new HelpCommand(),
-    new VersionCommand(),
-    new ImportCommand(),
-    new GenerateCommand()
-  ]);
+  const appContainer = Container.merge(
+    createCliApplicationContainer(),
+    createUserContainer(),
+    createOfferContainer(),
+  );
 
+  const cliApplication = appContainer.get<CLIApplication>(Component.CliApplication);
+  cliApplication.registerCommands([
+    appContainer.get<HelpCommand>(Component.HelpCommand),
+    appContainer.get<VersionCommand>(Component.VersionCommand),
+    appContainer.get<ImportCommand>(Component.ImportCommand),
+    appContainer.get<GenerateCommand>(Component.GenerateCommand),
+  ]);
   cliApplication.processCommand(process.argv);
 }
 
