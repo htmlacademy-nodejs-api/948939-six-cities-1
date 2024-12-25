@@ -1,0 +1,495 @@
+openapi: 3.0.0
+info:
+  title: API сервер для проекта «Шесть городов».
+  description: |-
+    * Список ресурсов и маршрутов сервера «Шесть городов».
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 2.0.0
+tags:
+  - name: offers
+    description: Предложения
+  - name: users
+    description: Пользователи
+  - name: comments
+    description: Комментарии
+
+paths:
+
+  # ПРЕДЛОЖЕНИЯ
+
+  /offers:
+
+    post:
+      tags:
+        - offers
+      summary: Создание нового предложения
+      description: Создание нового предложения
+      requestBody:
+        description: Информация для создания нового предложения
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/offer'
+        required: true
+      responses:
+        "201":
+          description: Предложение создано
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+        "401":
+          description: Пользователь не авторизован
+
+    get:
+      tags:
+        - offers
+      summary: Список предложений по аренде
+      description: Список предложений по аренде
+      responses:
+        "200":
+          description: Список предложений
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/offer'
+
+  /offers/{offerId}:
+
+    put:
+      parameters:
+        - $ref: '#/components/parameters/offerId'
+      tags:
+        - offers
+      summary: Редактирование предложения
+      description: Редактирование предложения
+      requestBody:
+        description: Информация для редактирования предложения
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/offer'
+        required: true
+      responses:
+        "200":
+          description: Предложение изменено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+        "401":
+          description: Пользователь не авторизован
+
+    delete:
+      parameters:
+        - $ref: '#/components/parameters/offerId'
+      tags:
+        - offers
+      summary: Удаление предложения по аренде
+      description: Удаление предложения по аренде
+      responses:
+        "200":
+          description: Предложение удалено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successfulResponse'
+        "401":
+          description: Пользователь не авторизован
+
+    get:
+      parameters:
+        - $ref: '#/components/parameters/offerId'
+      tags:
+        - offers
+      summary: Детальная информация по предложению
+      description: Детальная информация по предложению
+      responses:
+        "200":
+          description: Детальная информация по предложению
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/offer'
+
+  /offers/premium/{cityId}:
+
+    get:
+      parameters:
+        - $ref: '#/components/parameters/cityId'
+      tags:
+        - offers
+      summary: Премиальные предложения для города
+      description: Премиальные предложения для города
+      responses:
+        "200":
+          description: Премиальные предложения для города
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/offer'
+
+  /offers/favorite:
+
+    get:
+      tags:
+        - offers
+      summary: Список избранных предложений
+      description: Список избранных предложений
+      responses:
+        "200":
+          description: Список избранных предложений
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/offer'
+        "401":
+          description: Пользователь не авторизован
+
+
+  /offers/favorite/{offerId}:
+
+    post:
+      parameters:
+        - $ref: '#/components/parameters/offerId'
+      tags:
+        - offers
+      summary: Добавление предложения в избранное
+      description: Добавление предложения в избранное
+      responses:
+        "200":
+          description: Предложение добавлено в избранное
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/successfulResponse'
+        "401":
+          description: Пользователь не авторизован
+
+    delete:
+      parameters:
+        - $ref: '#/components/parameters/offerId'
+      tags:
+        - offers
+      summary: Удаление предложения из избранного
+      description: Удаление предложения из избранного
+      responses:
+        "200":
+          description: Предложение удалено
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/successfulResponse'
+        "401":
+          description: Пользователь не авторизован
+
+  # КОММЕНТАРИИ
+  
+  /comments:
+
+    get:
+      tags:
+        - comments
+      summary: Список комментариев для предложения
+      description: Список комментариев для предложения
+      responses:
+        "200":
+          description: Список комментариев
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/comment'
+
+    post:
+      tags:
+        - comments
+      summary: Добавление комментария
+      description: Добавление комментария
+      responses:
+        "201":
+          description: Комментарий создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/comment'
+        "401":
+          description: Пользователь не авторизован
+
+  # ПОЛЬЗОВАТЕЛИ
+
+  /users/registration:
+
+    post:
+      tags:
+        - users
+      summary: Создание нового пользователя
+      description: Создание нового пользователя
+      requestBody:
+        description: Информация для создания пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        "201":
+          description: Пользователь создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+  /users/login:
+
+    post:
+      tags:
+        - users
+      summary: Вход в закрытую часть приложения  
+      description: Вход в закрытую часть приложения  
+      requestBody:
+        description: Информация для создания пользователя
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login: 
+                  type: string
+                password:
+                  type: string
+        required: true
+      responses:
+        "200":
+          description: Информация о пользователе
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: 
+                    type: string
+
+  /users/logout:
+
+    post:
+      tags:
+        - users
+      summary: Выход из закрытой части приложения
+      description: Выход из закрытой части приложения (только если авторизация выполняется на основе сессий) 
+      responses:
+        "200":
+          description: Выход произведен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successfulResponse'
+        "401":
+          description: Пользователь не авторизован
+
+  /users/profile:
+
+    get:
+      tags:
+        - users
+      summary: Проверка состояния пользователя 
+      description: Проверка состояния пользователя
+      responses:
+        "200":
+          description: Информация о пользова еле
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "401":
+          description: Пользователь не авторизован
+  
+components:
+
+  parameters:
+
+    offerId:
+      name: offerId
+      in: query
+      schema:
+        type: integer
+      description: offer id
+
+    userId:
+      name: userId
+      in: query
+      schema:
+        type: integer
+      description: user id
+
+    commentId:
+      name: commentId
+      in: query
+      schema:
+        type: integer
+      description: comment id
+
+    cityId:
+      name: cityId
+      in: query
+      schema:
+        type: integer
+      description: city id
+
+  schemas:
+
+    successfulResponse:
+      type: object
+      properties:
+        success: 
+          type: boolean
+
+    city:
+      type: object
+      properties:
+        name: 
+          type: string
+        latitude: 
+          type: number
+        longitude: 
+          type: number
+
+    offerType:
+      type: string
+      enum:
+        - Apartment
+        - House
+        - Room
+        - Hotel
+
+    amenity:
+      type: string
+      enum:
+        - Breakfast
+        - AirConditioning
+        - LaptopFriendlyWorkspace
+        - BabySeat
+        - Washer
+        - Towels
+        - Fridge
+
+    userType:
+      type: string
+      enum:
+        - Ordinary
+        - Pro
+
+    rating:
+      type: number
+      minimum: 1
+      maximum: 5
+
+    date:
+      type: string
+      pattern: (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) 
+      example: "2019-05-17 18:35:00"
+
+    user:
+      type: object
+      properties:
+        name: 
+          type: string
+        email:
+          type: string
+        avatar:
+          type: string
+        password: 
+          type: string
+        type: 
+          $ref: '#/components/schemas/userType'
+
+    offer:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/date'
+        city: 
+          $ref: '#/components/schemas/city'
+        previewImage:
+          type: string
+        images:
+          type: array
+          items: 
+            type: string
+        isPremium:
+          type: boolean
+        isFavorite:
+          type: boolean
+        rating:
+          $ref: '#/components/schemas/rating'
+        type:
+          $ref: '#/components/schemas/offerType'
+        roomsCount:
+          type: number
+        guestsCount:
+          type: number
+        price:
+          type: number
+        amenities:
+          type: array
+          items:
+            $ref: '#/components/schemas/amenity'
+        author:
+          $ref: '#/components/schemas/user'
+        commentsCount:
+          type: number
+        latitude:
+          type: number
+        longitude:
+          type: number
+
+    offerSimplified:
+      properties:
+        name:
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/date'
+        type:
+          $ref: '#/components/schemas/offerType'
+        price:
+          type: number
+        commentsCount:
+          type: number
+        isPremium:
+          type: boolean
+        isFavorite:
+          type: boolean
+        rating:
+          $ref: '#/components/schemas/rating'
+
+    comment:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 5
+          maxLength: 1024
+        createdAt:
+          $ref: '#/components/schemas/date'
+        rating:
+          $ref: '#/components/schemas/rating'
+       
