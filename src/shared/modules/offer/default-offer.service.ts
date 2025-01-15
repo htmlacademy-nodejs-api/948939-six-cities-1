@@ -5,6 +5,8 @@ import { Logger } from '../../libs/logger/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
+import { DeleteResult } from 'mongoose';
+import { UpdateOfferDto } from './dto/update-offer.dto.js';
 
 
 @injectable()
@@ -25,5 +27,42 @@ export class DefaultOfferService implements OfferService {
     return this.offerModel
       .findById(offerId)
       .exec();
+  }
+
+  public async find(): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({})
+      .exec();
+  }
+
+  public async deleteById(offerId: string): Promise<DeleteResult> {
+    return this.offerModel.deleteOne({ offerId }).exec();
+  }
+
+  public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findOneAndUpdate({ offerId }, dto, { new: true });
+  }
+
+  public async findPremiumByCity(cityName: string): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({'city.name': cityName, isPremium: true})
+      .exec();
+  }
+
+  public async findFavorite(): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ isFavorite: true })
+      .exec();
+  }
+
+  public async addToFavorite(offerId: string): Promise<null> {
+    return this.offerModel
+      .findOneAndUpdate({ offerId }, { isFavorite: true }, { new: true });
+  }
+
+  public async deleteFromFavorite(offerId: string): Promise<null> {
+    return this.offerModel
+      .findOneAndUpdate({ offerId }, { isFavorite: false }, { new: true });
   }
 }
