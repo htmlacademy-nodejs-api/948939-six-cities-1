@@ -8,7 +8,7 @@ import { types } from '@typegoose/typegoose';
 export function createCommentContainer() {
   const offerContainer = new Container();
 
-  offerContainer.bind<CommentService>(Component.OfferService).to(DefaultCommentService);
+  offerContainer.bind<CommentService>(Component.CommentService).to(DefaultCommentService);
   offerContainer.bind<types.ModelType<CommentEntity>>(Component.OfferModel).toConstantValue(CommentModel);
 
   return offerContainer;

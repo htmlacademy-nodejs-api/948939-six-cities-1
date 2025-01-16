@@ -6,7 +6,7 @@ import { DocumentType, types } from '@typegoose/typegoose';
 import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { OfferEntity } from '../offer/offer.entity.js';
-
+import { DeleteResult } from 'mongoose';
 
 @injectable()
 export class DefaultCommentService implements CommentService {
@@ -48,5 +48,10 @@ export class DefaultCommentService implements CommentService {
       .find({ offerId })
       .populate(['offerId', 'userId'])
       .exec();
+  }
+
+  public async deleteByOfferId(offerId: string): Promise<DeleteResult> {
+    return this.commentModel
+      .deleteOne({ offerId }).exec();
   }
 }

@@ -8,7 +8,7 @@ export interface CommentEntity extends defaultClasses.Base {}
 
 @modelOptions({
   schemaOptions: {
-    collection: 'offers',
+    collection: 'comments',
     timestamps: true,
   }
 })

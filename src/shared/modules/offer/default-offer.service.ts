@@ -50,19 +50,15 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async findFavorite(): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel
-      .find({ isFavorite: true })
-      .exec();
+  public async findFavorite(): Promise<void> {
+    throw new Error('Unimplemented');
   }
 
-  public async addToFavorite(offerId: string): Promise<null> {
-    return this.offerModel
-      .findOneAndUpdate({ offerId }, { isFavorite: true }, { new: true });
+  public async addToFavorite(): Promise<void> {
+    throw new Error('Unimplemented');
   }
 
-  public async deleteFromFavorite(offerId: string): Promise<null> {
-    return this.offerModel
-      .findOneAndUpdate({ offerId }, { isFavorite: false }, { new: true });
+  public async deleteFromFavorite(): Promise<void> {
+    throw new Error('Unimplemented');
   }
 }
