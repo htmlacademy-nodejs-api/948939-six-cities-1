@@ -40,7 +40,7 @@ export class ImportCommand implements Command {
     const user = await this.userService.findOrCreate({...offer.author}, this.config.get('SALT'),);
 
     await this.offerService.create({
-      author: user.id,
+      userId: user.id,
       name: offer.name,
       description: offer.description,
       createdAt: offer.createdAt,
@@ -48,7 +48,6 @@ export class ImportCommand implements Command {
       previewImage: offer.previewImage,
       images: offer.images,
       isPremium: offer.isPremium,
-      isFavorite: offer.isFavorite,
       rating: offer.rating,
       type: offer.type,
       roomsCount: offer.roomsCount,

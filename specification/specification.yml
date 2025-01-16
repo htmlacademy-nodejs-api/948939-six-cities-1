@@ -437,8 +437,6 @@ components:
             type: string
         isPremium:
           type: boolean
-        isFavorite:
-          type: boolean
         rating:
           $ref: '#/components/schemas/rating'
         type:
@@ -475,8 +473,6 @@ components:
         commentsCount:
           type: number
         isPremium:
-          type: boolean
-        isFavorite:
           type: boolean
         rating:
           $ref: '#/components/schemas/rating'
