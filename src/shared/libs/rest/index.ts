@@ -8,3 +8,5 @@ export * from './types/request.params.type.js';
 export * from './errors/index.js';
 export * from './types/request-query.type.js';
 export * from './types/request-body.type.js';
+export * from './types/validation-error-field.type.js';
+export * from './types/application-error.enum.js';

@@ -9,7 +9,7 @@ export function createCommentContainer() {
   const offerContainer = new Container();
 
   offerContainer.bind<CommentService>(Component.CommentService).to(DefaultCommentService);
-  offerContainer.bind<types.ModelType<CommentEntity>>(Component.OfferModel).toConstantValue(CommentModel);
+  offerContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel);
 
   return offerContainer;
 }
