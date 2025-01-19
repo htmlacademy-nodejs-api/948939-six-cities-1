@@ -5,7 +5,6 @@ Content-Type: application/json
 {
   "name": "rooms apartment",
   "description": "Small but cheap",
-  "createdAt": "2024-06-23T00:00:00",
   "city": {
     "name": "Brussels",
     "latitude": 52.370216,

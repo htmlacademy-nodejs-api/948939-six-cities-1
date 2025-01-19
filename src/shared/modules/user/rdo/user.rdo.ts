@@ -14,8 +14,5 @@ export class UserRdo {
   public avatar!: string;
 
   @Expose()
-  public password!: string;
-
-  @Expose()
   public type!: string;
 }

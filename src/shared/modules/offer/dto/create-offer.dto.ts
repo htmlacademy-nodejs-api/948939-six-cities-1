@@ -3,7 +3,6 @@ import { OfferType, Amenities, User, City } from '../../../types/index.js';
 export class CreateOfferDto {
   public name!: string;
   public description!: string;
-  public createdAt!: string;
   public city!: City;
   public previewImage!: string;
   public images!: string[];

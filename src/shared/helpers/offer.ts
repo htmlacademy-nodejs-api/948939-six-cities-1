@@ -4,7 +4,6 @@ export function createOffer(offerData: string): Offer {
   const [
     name,
     description,
-    createdAt,
     cityName,
     cityLatitude,
     cityLongitude,
@@ -44,7 +43,6 @@ export function createOffer(offerData: string): Offer {
   return {
     name: name,
     description,
-    createdAt: createdAt,
     city,
     previewImage,
     images: imagesRaw.split(','),

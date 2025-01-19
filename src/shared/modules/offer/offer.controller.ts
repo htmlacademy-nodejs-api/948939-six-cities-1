@@ -32,47 +32,47 @@ export default class OfferController extends BaseController {
 
     this.logger.info('Register routes for OfferController');
     this.addRoute({
-      path: '/offers',
+      path: '/',
       method: HttpMethod.Post,
       handler: this.createOffer,
     });
     this.addRoute({
-      path: '/offers',
+      path: '/',
       method: HttpMethod.Get,
       handler: this.getOffers,
     });
     this.addRoute({
-      path: '/offers/:offerId',
+      path: '/:offerId',
       method: HttpMethod.Get,
       handler: this.getOneOffer,
     });
     this.addRoute({
-      path: '/offers/:offerId',
+      path: '/:offerId',
       method: HttpMethod.Delete,
       handler: this.deleteOneOffer,
     });
     this.addRoute({
-      path: '/offers/:offerId',
+      path: '/:offerId',
       method: HttpMethod.Patch,
       handler: this.updateOneOffer,
     });
     this.addRoute({
-      path: '/offers/premium/:city',
+      path: '/premium/:city',
       method: HttpMethod.Get,
       handler: this.getPremiumOffersByCity,
     });
     this.addRoute({
-      path: '/offers/favorite',
+      path: '/favorite',
       method: HttpMethod.Get,
       handler: this.getFavorite,
     });
     this.addRoute({
-      path: '/offers/favorite/:offerId',
+      path: '/favorite/:offerId',
       method: HttpMethod.Post,
       handler: this.addFavorite,
     });
     this.addRoute({
-      path: '/offers/favorite/:offerId',
+      path: '/favorite/:offerId',
       method: HttpMethod.Delete,
       handler: this.deleteFavorite,
     });
