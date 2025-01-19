@@ -26,7 +26,6 @@ export enum Amenities {
 export type Offer = {
   name: string;
   description: string;
-  createdAt: string;
   city: City
   previewImage: string;
   images: string[];
