@@ -17,20 +17,20 @@ import {
   ArrayMinSize,
   ArrayMaxSize
 } from 'class-validator';
-import { CreateUpdateOfferMessage } from './update-offer.messages.js';
+import { OfferMessage } from './offer.messages.js';
 
 export class UpdateOfferDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(10, { message: CreateUpdateOfferMessage.title.minLength })
-  @MaxLength(100, { message: CreateUpdateOfferMessage.title.maxLength })
+  @MinLength(10, { message: OfferMessage.title.minLength })
+  @MaxLength(100, { message: OfferMessage.title.maxLength })
   public name!: string;
 
   @IsOptional()
   @IsString()
-  @MinLength(20, { message: CreateUpdateOfferMessage.description.minLength })
-  @MaxLength(1024, { message: CreateUpdateOfferMessage.description.maxLength })
+  @MinLength(20, { message: OfferMessage.description.minLength })
+  @MaxLength(1024, { message: OfferMessage.description.maxLength })
   public description!: string;
 
   @IsOptional()
@@ -44,7 +44,7 @@ export class UpdateOfferDto {
   @IsArray()
   @ArrayMinSize(6)
   @ArrayMaxSize(6)
-  @IsString()
+  @IsString({each: true})
   public images!: string[];
 
   @IsOptional()
@@ -53,35 +53,35 @@ export class UpdateOfferDto {
 
   @IsOptional()
   @IsNumber()
-  @Min(1, { message: CreateUpdateOfferMessage.rating.minValue })
-  @Max(5, { message: CreateUpdateOfferMessage.rating.maxValue })
+  @Min(1, { message: OfferMessage.rating.minValue })
+  @Max(5, { message: OfferMessage.rating.maxValue })
   public rating!: number;
 
   @IsOptional()
-  @IsEnum(OfferType, { message: CreateUpdateOfferMessage.type.invalid })
+  @IsEnum(OfferType, { message: OfferMessage.type.invalid })
   public type!: OfferType;
 
   @IsOptional()
-  @IsInt({ message: CreateUpdateOfferMessage.roomsCount.invalidFormat })
-  @Min(1, { message: CreateUpdateOfferMessage.roomsCount.minValue })
-  @Max(8, { message: CreateUpdateOfferMessage.roomsCount.maxValue })
+  @IsInt({ message: OfferMessage.roomsCount.invalidFormat })
+  @Min(1, { message: OfferMessage.roomsCount.minValue })
+  @Max(8, { message: OfferMessage.roomsCount.maxValue })
   public roomsCount!: number;
 
   @IsOptional()
-  @IsInt({ message: CreateUpdateOfferMessage.guestsCount.invalidFormat })
-  @Min(1, { message: CreateUpdateOfferMessage.guestsCount.minValue })
-  @Max(10, { message: CreateUpdateOfferMessage.guestsCount.maxValue })
+  @IsInt({ message: OfferMessage.guestsCount.invalidFormat })
+  @Min(1, { message: OfferMessage.guestsCount.minValue })
+  @Max(10, { message: OfferMessage.guestsCount.maxValue })
   public guestsCount!: number;
 
   @IsOptional()
-  @IsInt({ message: CreateUpdateOfferMessage.price.invalidFormat })
-  @Min(100, { message: CreateUpdateOfferMessage.price.minValue })
-  @Max(100000, { message: CreateUpdateOfferMessage.price.maxValue })
+  @IsInt({ message: OfferMessage.price.invalidFormat })
+  @Min(100, { message: OfferMessage.price.minValue })
+  @Max(100000, { message: OfferMessage.price.maxValue })
   public price!: number;
 
   @IsOptional()
-  @IsArray({ message: CreateUpdateOfferMessage.amenities.notArray })
-  @IsEnum(Amenities, { message: CreateUpdateOfferMessage.amenities.invalid })
+  @IsArray({ message: OfferMessage.amenities.notArray })
+  @IsEnum(Amenities, { each: true, message: OfferMessage.amenities.invalid })
   public amenities!: Amenities[];
 
   @IsOptional()
@@ -89,7 +89,7 @@ export class UpdateOfferDto {
   public userId!: User;
 
   @IsOptional()
-  @IsInt({ message: CreateUpdateOfferMessage.commentsCount.invalidFormat })
+  @IsInt({ message: OfferMessage.commentsCount.invalidFormat })
   public commentsCount!: number;
 
   @IsOptional()

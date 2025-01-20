@@ -1,4 +1,4 @@
-export const CreateOfferValidationMessage = {
+export const OfferMessage = {
   title: {
     minLength: 'Minimum title length must be 10',
     maxLength: 'Maximum title length must be 100',
@@ -34,7 +34,7 @@ export const CreateOfferValidationMessage = {
     invalidFormat: 'commentsCount must be an integer',
   },
   type: {
-    invalid: 'amenities must be in array [Apartment, House, Room, Hotel]'
+    invalid: 'type must be in array [Apartment, House, Room, Hotel]'
   },
   userId: {
     invalidId: 'userId field must be a valid id',

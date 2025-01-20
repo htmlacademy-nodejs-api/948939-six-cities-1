@@ -6,6 +6,7 @@ import {
   HttpError,
   HttpMethod,
   ValidateDtoMiddleware,
+  ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
 import { Component } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
@@ -43,7 +44,10 @@ export default class CommentController extends BaseController {
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Get,
-      handler: this.getByOfferId
+      handler: this.getByOfferId,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+      ]
     });
   }
 

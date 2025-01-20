@@ -39,7 +39,6 @@ export default class OfferController extends BaseController {
       method: HttpMethod.Post,
       handler: this.createOffer,
       middlewares: [
-        new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(CreateOfferDto)
       ]
     });

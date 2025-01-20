@@ -4,21 +4,24 @@ Content-Type: application/json
 
 {
   "name": "rooms apartment",
-  "description": "Small but cheap",
+  "description": "Small but cheap. Small but cheap",
   "city": {
     "name": "Brussels",
     "latitude": 52.370216,
-    "longitude": 4.895168,
+    "longitude": 4.895168
   },
   "previewImage": "./img/preview2.jpg",
   "images": [
+    "./img/photo4.jpg",
+    "./img/photo5.jpg",
+    "./img/photo6.jpg",
     "./img/photo4.jpg",
     "./img/photo5.jpg",
     "./img/photo6.jpg"
   ],
   "isPremium": true,
   "rating": 4,
-  "type": 3,
+  "type": "Apartment",
   "roomsCount": 4,
   "guestsCount": 5,
   "price": 4000,
@@ -55,22 +58,24 @@ Content-Type: application/json
 
 {
   "name": "rooms apartment",
-  "description": "Small but cheap",
-  "createdAt": "2024-06-23T00:00:00",
+  "description": "Small but cheap. Small but cheap",
   "city": {
     "name": "Brussels",
     "latitude": 52.370216,
-    "longitude": 4.895168,
+    "longitude": 4.895168
   },
   "previewImage": "./img/preview2.jpg",
   "images": [
+    "./img/photo4.jpg",
+    "./img/photo5.jpg",
+    "./img/photo6.jpg",
     "./img/photo4.jpg",
     "./img/photo5.jpg",
     "./img/photo6.jpg"
   ],
   "isPremium": true,
   "rating": 4,
-  "type": 3,
+  "type": "Apartment",
   "roomsCount": 4,
   "guestsCount": 5,
   "price": 4000,
