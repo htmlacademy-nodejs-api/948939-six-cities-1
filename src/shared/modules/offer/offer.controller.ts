@@ -1,6 +1,8 @@
 import {
   BaseController,
-  HttpMethod
+  HttpMethod,
+  ValidateObjectIdMiddleware,
+  ValidateDtoMiddleware
 } from '../../libs/rest/index.js';
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/index.js';
@@ -12,12 +14,13 @@ import { OfferRdo } from './rdo/offer.rdo.js';
 import { CommentService } from '../comment/index.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { ParamsDictionary } from 'express-serve-static-core';
+import { UpdateOfferDto } from './dto/update-offer.dto.js';
 
-export type ParamOfferId = {
+type ParamOfferId = {
   offerId: string;
 } | ParamsDictionary;
 
-export type ParamCityName = {
+type ParamCityName = {
   cityName: string;
 } | ParamsDictionary;
 
@@ -35,6 +38,10 @@ export default class OfferController extends BaseController {
       path: '/',
       method: HttpMethod.Post,
       handler: this.createOffer,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new ValidateDtoMiddleware(CreateOfferDto)
+      ]
     });
     this.addRoute({
       path: '/',
@@ -45,16 +52,26 @@ export default class OfferController extends BaseController {
       path: '/:offerId',
       method: HttpMethod.Get,
       handler: this.getOneOffer,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+      ]
     });
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Delete,
       handler: this.deleteOneOffer,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+      ]
     });
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Patch,
       handler: this.updateOneOffer,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new ValidateDtoMiddleware(UpdateOfferDto)
+      ]
     });
     this.addRoute({
       path: '/premium/:city',
@@ -70,11 +87,17 @@ export default class OfferController extends BaseController {
       path: '/favorite/:offerId',
       method: HttpMethod.Post,
       handler: this.addFavorite,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+      ]
     });
     this.addRoute({
       path: '/favorite/:offerId',
       method: HttpMethod.Delete,
       handler: this.deleteFavorite,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+      ]
     });
   }
 
