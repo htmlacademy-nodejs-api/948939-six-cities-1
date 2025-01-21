@@ -1,11 +1,13 @@
 import { inject, injectable } from 'inversify';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import {
   BaseController,
   HttpError,
   HttpMethod,
-  ValidateDtoMiddleware
+  ValidateDtoMiddleware,
+  UploadFileMiddleware,
+  ValidateObjectIdMiddleware
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
@@ -15,7 +17,6 @@ import { fillDTO } from '../../helpers/index.js';
 import { UserRdo } from './rdo/user.rdo.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { LoginUserDto } from './dto/login-user.dto.js';
-import { Request } from 'express';
 import { RequestBody, RequestParams } from '../../libs/rest/index.js';
 
 @injectable()
@@ -44,6 +45,15 @@ export class UserController extends BaseController {
         new ValidateDtoMiddleware(LoginUserDto)
       ]
     });
+    this.addRoute({
+      path: '/:userId/avatar',
+      method: HttpMethod.Post,
+      handler: this.uploadAvatar,
+      middlewares: [
+        new ValidateObjectIdMiddleware('userId'),
+        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'),
+      ]
+    });
   }
 
   public async create(
@@ -70,5 +80,11 @@ export class UserController extends BaseController {
   ): Promise<void> {
     const user = await this.userService.findByEmail(body.email);
     this.ok(res, fillDTO(UserRdo, user));
+  }
+
+  public async uploadAvatar(req: Request, res: Response) {
+    this.created(res, {
+      filepath: req.file?.path
+    });
   }
 }
