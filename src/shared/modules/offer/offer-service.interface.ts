@@ -14,5 +14,8 @@ export interface OfferService {
   findFavorite(): Promise<void>;
   addToFavorite(): Promise<void>;
   deleteFromFavorite(): Promise<void>;
+  incCommentCount(offerId: string): Promise<void>;
+  recalculateRating(offerId: string): Promise<void>;
+  exists(documentId: string): Promise<boolean>;
 }
 
