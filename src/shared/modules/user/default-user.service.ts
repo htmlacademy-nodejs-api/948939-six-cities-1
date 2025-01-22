@@ -36,4 +36,9 @@ export class DefaultUserService implements UserService {
 
     return this.create(dto, salt);
   }
+
+  public async updateAvatar(userId: string, avatar: string): Promise<void> {
+    const setNewAvatarPath = { $set: { avatar } };
+    await this.userModel.findByIdAndUpdate({ _id: userId }, setNewAvatarPath);
+  }
 }

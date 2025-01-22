@@ -83,8 +83,15 @@ export class UserController extends BaseController {
   }
 
   public async uploadAvatar(req: Request, res: Response) {
+    if (!req.file) {
+      throw new HttpError(
+        StatusCodes.CONFLICT,
+        'No file uploaded'
+      );
+    }
+    await this.userService.updateAvatar(req.params.userId, req.file.path);
     this.created(res, {
-      filepath: req.file?.path
+      filepath: req.file.path
     });
   }
 }
