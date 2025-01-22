@@ -12,3 +12,5 @@ export * from './types/validation-error-field.type.js';
 export * from './types/application-error.enum.js';
 export * from './middleware/validate-objectid.middleware.js';
 export * from './middleware/validate-dto.middleware.js';
+export * from './middleware/document-exists.middleware.js';
+export * from './middleware/upload-file.middleware.js';

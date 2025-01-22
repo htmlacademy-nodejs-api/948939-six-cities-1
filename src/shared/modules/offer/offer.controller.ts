@@ -2,7 +2,8 @@ import {
   BaseController,
   HttpMethod,
   ValidateObjectIdMiddleware,
-  ValidateDtoMiddleware
+  ValidateDtoMiddleware,
+  DocumentExistsMiddleware
 } from '../../libs/rest/index.js';
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/index.js';
@@ -53,6 +54,7 @@ export default class OfferController extends BaseController {
       handler: this.getOneOffer,
       middlewares: [
         new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
     });
     this.addRoute({
@@ -61,6 +63,7 @@ export default class OfferController extends BaseController {
       handler: this.deleteOneOffer,
       middlewares: [
         new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
     });
     this.addRoute({
@@ -68,8 +71,9 @@ export default class OfferController extends BaseController {
       method: HttpMethod.Patch,
       handler: this.updateOneOffer,
       middlewares: [
+        new ValidateDtoMiddleware(UpdateOfferDto),
         new ValidateObjectIdMiddleware('offerId'),
-        new ValidateDtoMiddleware(UpdateOfferDto)
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
     });
     this.addRoute({
@@ -88,6 +92,7 @@ export default class OfferController extends BaseController {
       handler: this.addFavorite,
       middlewares: [
         new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
     });
     this.addRoute({
@@ -96,6 +101,7 @@ export default class OfferController extends BaseController {
       handler: this.deleteFavorite,
       middlewares: [
         new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
     });
   }
