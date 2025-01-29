@@ -3,7 +3,8 @@ import {
   HttpMethod,
   ValidateObjectIdMiddleware,
   ValidateDtoMiddleware,
-  DocumentExistsMiddleware
+  DocumentExistsMiddleware,
+  PrivateRouteMiddleware
 } from '../../libs/rest/index.js';
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/index.js';
@@ -40,6 +41,7 @@ export default class OfferController extends BaseController {
       method: HttpMethod.Post,
       handler: this.createOffer,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateDtoMiddleware(CreateOfferDto)
       ]
     });
@@ -62,6 +64,7 @@ export default class OfferController extends BaseController {
       method: HttpMethod.Delete,
       handler: this.deleteOneOffer,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
@@ -71,6 +74,7 @@ export default class OfferController extends BaseController {
       method: HttpMethod.Patch,
       handler: this.updateOneOffer,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateDtoMiddleware(UpdateOfferDto),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
@@ -106,8 +110,8 @@ export default class OfferController extends BaseController {
     });
   }
 
-  public async createOffer({ body }: Request<unknown, unknown, CreateOfferDto>, res: Response<OfferRdo>): Promise<void> {
-    const newOffer = await this.offerService.create(body);
+  public async createOffer({ body, tokenPayload }: Request<unknown, unknown, CreateOfferDto>, res: Response<OfferRdo>): Promise<void> {
+    const newOffer = await this.offerService.create({ ...body, userId: tokenPayload.id });
     this.created(res, fillDTO(OfferRdo, newOffer));
   }
 

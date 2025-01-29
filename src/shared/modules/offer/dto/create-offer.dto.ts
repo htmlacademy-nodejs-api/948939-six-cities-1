@@ -1,10 +1,9 @@
-import { OfferType, Amenities, User, City } from '../../../types/index.js';
+import { OfferType, Amenities, City } from '../../../types/index.js';
 import {
   IsEnum,
   IsString,
   IsInt,
   IsArray,
-  IsMongoId,
   IsNumber,
   IsLatitude,
   IsLongitude,
@@ -71,8 +70,7 @@ export class CreateOfferDto {
   @IsEnum(Amenities, {each: true, message: OfferMessage.amenities.invalid })
   public amenities!: Amenities[];
 
-  @IsMongoId()
-  public userId!: User;
+  public userId!: string;
 
   @IsInt({ message: OfferMessage.commentsCount.invalidFormat })
   public commentsCount!: number;
