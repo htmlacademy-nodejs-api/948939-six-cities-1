@@ -40,8 +40,6 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async deleteById(offerId: string): Promise<DeleteResult> {
-    console.log("deleteById");
-    console.log(offerId);
     return this.offerModel.deleteOne({ _id: offerId }).exec();
   }
 
@@ -92,7 +90,7 @@ export class DefaultOfferService implements OfferService {
     const offers = await this.offerModel
       .find({ favoriteByUsers: userId })
       .exec();
-    return offers
+    return offers;
   }
 
   public async addToFavorite(offerId: string, userId: string): Promise<void> {

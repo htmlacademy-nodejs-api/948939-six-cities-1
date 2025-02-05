@@ -131,12 +131,12 @@ export default class OfferController extends BaseController {
 
   public async deleteOneOffer({ params, tokenPayload }: Request<ParamOfferId>, res: Response): Promise<void> {
     const { offerId } = params;
-    const offer = await this.offerService.findById(offerId)
+    const offer = await this.offerService.findById(offerId);
 
     if (offer?.userId._id.toString() !== tokenPayload.id) {
       throw new HttpError(
         StatusCodes.NOT_FOUND,
-        `Offer ont found`,
+        'Offer ont found',
         'OfferController'
       );
     }
@@ -149,12 +149,12 @@ export default class OfferController extends BaseController {
 
   public async updateOneOffer({ params, body, tokenPayload }: Request<ParamOfferId, CreateOfferDto>, res: Response): Promise<void> {
     const { offerId } = params;
-    const offer = await this.offerService.findById(offerId)
+    const offer = await this.offerService.findById(offerId);
 
     if (offer?.userId._id.toString() !== tokenPayload.id) {
       throw new HttpError(
         StatusCodes.NOT_FOUND,
-        `Offer ont found`,
+        'Offer ont found',
         'OfferController'
       );
     }
