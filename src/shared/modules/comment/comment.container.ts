@@ -6,10 +6,10 @@ import { CommentEntity, CommentModel } from './comment.entity.js';
 import { types } from '@typegoose/typegoose';
 
 export function createCommentContainer() {
-  const offerContainer = new Container();
+  const commentContainer = new Container();
 
-  offerContainer.bind<CommentService>(Component.CommentService).to(DefaultCommentService);
-  offerContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel);
+  commentContainer.bind<CommentService>(Component.CommentService).to(DefaultCommentService).inSingletonScope();
+  commentContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel);
 
-  return offerContainer;
+  return commentContainer;
 }

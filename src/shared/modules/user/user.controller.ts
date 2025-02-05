@@ -6,8 +6,7 @@ import {
   HttpError,
   HttpMethod,
   ValidateDtoMiddleware,
-  UploadFileMiddleware,
-  ValidateObjectIdMiddleware
+  UploadFileMiddleware
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
@@ -48,11 +47,10 @@ export class UserController extends BaseController {
       ]
     });
     this.addRoute({
-      path: '/:userId/avatar',
+      path: '/avatar',
       method: HttpMethod.Post,
       handler: this.uploadAvatar,
       middlewares: [
-        new ValidateObjectIdMiddleware('userId'),
         new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'),
       ]
     });
@@ -101,7 +99,7 @@ export class UserController extends BaseController {
         'No file uploaded'
       );
     }
-    await this.userService.updateAvatar(req.params.userId, req.file.path);
+    await this.userService.updateAvatar(req.tokenPayload.id, req.file.path);
     this.created(res, {
       filepath: req.file.path
     });

@@ -48,45 +48,18 @@ GET http://localhost:4000/offers/62711a50b0e24a624d49ffdc HTTP/1.1
 ###
 
 # Удалить объявление по идентификатору
-DELETE http://localhost:4000/offers/62711a50b0e24a624d49ffdc HTTP/1.1
+DELETE http://localhost:4000/offers/67a3279ed319b8c479798258 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRydW1wQGdtYWlsLmNvbSIsIm5hbWUiOiJCYXJhayBPYmFtYSIsImlkIjoiNjdhMzI3OWVkMzE5YjhjNDc5Nzk4MjYwIiwiaWF0IjoxNzM4NzQ2ODkyLCJleHAiOjE3Mzg5MTk2OTJ9.gl6RN0PkBhZihJpKBL2-XGptMHliyGFFiZEqDc_CWxs
 
 ###
 
 # Изменить объявление по идентификатору
-PATCH http://localhost:4000/offers/62711a50b0e24a624d49ffdc HTTP/1.1
+PATCH http://localhost:4000/offers/67a3279ed319b8c479798258 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRydW1wQGdtYWlsLmNvbSIsIm5hbWUiOiJCYXJhayBPYmFtYSIsImlkIjoiNjdhMzI3OWVkMzE5YjhjNDc5Nzk4MjYwIiwiaWF0IjoxNzM4NzQ2ODkyLCJleHAiOjE3Mzg5MTk2OTJ9.gl6RN0PkBhZihJpKBL2-XGptMHliyGFFiZEqDc_CWxs
 Content-Type: application/json
 
 {
-  "name": "rooms apartment",
-  "description": "Small but cheap. Small but cheap",
-  "city": {
-    "name": "Brussels",
-    "latitude": 52.370216,
-    "longitude": 4.895168
-  },
-  "previewImage": "./img/preview2.jpg",
-  "images": [
-    "./img/photo4.jpg",
-    "./img/photo5.jpg",
-    "./img/photo6.jpg",
-    "./img/photo4.jpg",
-    "./img/photo5.jpg",
-    "./img/photo6.jpg"
-  ],
-  "isPremium": true,
-  "rating": 4,
-  "type": "Apartment",
-  "roomsCount": 4,
-  "guestsCount": 5,
-  "price": 4000,
-  "amenities": [
-    "AirConditioning",
-    "Fridge"
-  ],
-  "userId": "62711a50b0e24a624d49ffdc",
-  "commentsCount": 0,
-  "latitude": 52.370216,
-  "longitude": 4.895168
+  "roomsCount": 2
 }
 
 ###
@@ -97,16 +70,19 @@ GET http://localhost:4000/offers/premium/Amsterdam HTTP/1.1
 ###
 
 # Получить список избранных
-GET HTTP/1.1 http://localhost:4000/offers/favorite HTTP/1.1
+GET http://localhost:4000/offers/favorite HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRydW1wQGdtYWlsLmNvbSIsIm5hbWUiOiJCYXJhayBPYmFtYSIsImlkIjoiNjdhMzhmMDNmMzcxZmI3YjM3MzFhYzhjIiwiaWF0IjoxNzM4NzcyMjYyLCJleHAiOjE3Mzg5NDUwNjJ9.oJ-1czYXuLuDGJB9xL0zUxNvNv7ZRGhXZ3cMldjdWoA
 
 ###
 
 # Добавить объявление в избранные
-POST http://localhost:4000/offers/favorite/62711a50b0e24a624d49ffdc HTTP/1.1
+POST http://localhost:4000/offers/favorite/67a38f03f371fb7b3731ac84 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRydW1wQGdtYWlsLmNvbSIsIm5hbWUiOiJCYXJhayBPYmFtYSIsImlkIjoiNjdhMzhmMDNmMzcxZmI3YjM3MzFhYzhjIiwiaWF0IjoxNzM4NzcyMjYyLCJleHAiOjE3Mzg5NDUwNjJ9.oJ-1czYXuLuDGJB9xL0zUxNvNv7ZRGhXZ3cMldjdWoA
 
 ###
 
 # Удалить объявление из избранных
-DELETE http://localhost:4000/offers/favorite/62711a50b0e24a624d49ffdc HTTP/1.1
+DELETE http://localhost:4000/offers/favorite/67a38f03f371fb7b3731ac81 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRydW1wQGdtYWlsLmNvbSIsIm5hbWUiOiJCYXJhayBPYmFtYSIsImlkIjoiNjdhMzhmMDNmMzcxZmI3YjM3MzFhYzhjIiwiaWF0IjoxNzM4NzcyMjYyLCJleHAiOjE3Mzg5NDUwNjJ9.oJ-1czYXuLuDGJB9xL0zUxNvNv7ZRGhXZ3cMldjdWoA
 
 ###

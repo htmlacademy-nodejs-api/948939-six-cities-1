@@ -5,7 +5,8 @@ import {
   Min,
   Max,
   MinLength,
-  MaxLength
+  MaxLength,
+  IsOptional
 } from 'class-validator';
 import { CreateCommentMessages } from './create-comment.messages.js';
 
@@ -20,9 +21,10 @@ export class CreateCommentDto {
   @Max(5, { message: CreateCommentMessages.rating.maxValue })
   public rating!: number;
 
-  @IsMongoId({ message: CreateCommentMessages.userId.invalidFormat })
-  public userId!: string;
-
   @IsMongoId({ message: CreateCommentMessages.offerId.invalidFormat })
   public offerId!: string;
+
+  @IsOptional()
+  @IsMongoId()
+  public userId!: string;
 }

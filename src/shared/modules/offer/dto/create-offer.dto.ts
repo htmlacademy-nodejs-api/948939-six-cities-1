@@ -13,7 +13,9 @@ import {
   MinLength,
   MaxLength,
   ArrayMinSize,
-  ArrayMaxSize
+  ArrayMaxSize,
+  IsOptional,
+  IsMongoId
 } from 'class-validator';
 import { OfferMessage } from './offer.messages.js';
 
@@ -70,6 +72,8 @@ export class CreateOfferDto {
   @IsEnum(Amenities, {each: true, message: OfferMessage.amenities.invalid })
   public amenities!: Amenities[];
 
+  @IsOptional()
+  @IsMongoId()
   public userId!: string;
 
   @IsInt({ message: OfferMessage.commentsCount.invalidFormat })

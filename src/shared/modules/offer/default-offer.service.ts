@@ -8,6 +8,7 @@ import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { DeleteResult } from 'mongoose';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import { CommentEntity } from '../comment/comment.entity.js';
+import { UserEntity } from '../user/user.entity.js';
 
 
 @injectable()
@@ -16,6 +17,7 @@ export class DefaultOfferService implements OfferService {
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.OfferModel) private readonly offerModel: types.ModelType<OfferEntity>,
     @inject(Component.CommentModel) private readonly commentModel: types.ModelType<CommentEntity>,
+    @inject(Component.UserModel) private readonly userModel: types.ModelType<UserEntity>,
   ) {}
 
   public async create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>> {
@@ -38,12 +40,14 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async deleteById(offerId: string): Promise<DeleteResult> {
-    return this.offerModel.deleteOne({ offerId }).exec();
+    console.log("deleteById");
+    console.log(offerId);
+    return this.offerModel.deleteOne({ _id: offerId }).exec();
   }
 
   public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
-      .findOneAndUpdate({ offerId }, dto, { new: true });
+      .findOneAndUpdate({ _id: offerId }, dto, { new: true });
   }
 
   public async findPremiumByCity(cityName: string): Promise<DocumentType<OfferEntity>[]> {
@@ -84,15 +88,28 @@ export class DefaultOfferService implements OfferService {
       .exists({_id: documentId})) !== null;
   }
 
-  public async findFavorite(): Promise<void> {
-    throw new Error('Unimplemented');
+  public async findFavorite(userId: string): Promise<DocumentType<OfferEntity>[]> {
+    const offers = await this.offerModel
+      .find({ favoriteByUsers: userId })
+      .exec();
+    return offers
   }
 
-  public async addToFavorite(): Promise<void> {
-    throw new Error('Unimplemented');
+  public async addToFavorite(offerId: string, userId: string): Promise<void> {
+    await this.offerModel
+      .updateOne({ _id: offerId }, {$addToSet: { favoriteByUsers: userId }})
+      .exec();
+    await this.userModel
+      .updateOne({ _id: userId }, {$addToSet: { favoriteOffers: offerId }})
+      .exec();
   }
 
-  public async deleteFromFavorite(): Promise<void> {
-    throw new Error('Unimplemented');
+  public async deleteFromFavorite(offerId: string, userId: string): Promise<void> {
+    await this.offerModel
+      .updateOne({ _id: offerId }, {$pull: { favoriteByUsers: userId }})
+      .exec();
+    await this.userModel
+      .updateOne({ _id: userId }, {$pull: { favoriteOffers: offerId }})
+      .exec();
   }
 }

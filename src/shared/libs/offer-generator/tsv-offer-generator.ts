@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { OfferGenerator } from './offer-generator.interface.js';
 import { MockServerData, MockCity, OfferType, UserType } from '../../types/index.js';
 import { generateRandomValue, getRandomItem, getRandomItems, getRandomBoolean } from '../../helpers/index.js';
@@ -7,19 +6,12 @@ import generator from 'generate-password';
 const MIN_PRICE = 500;
 const MAX_PRICE = 2000;
 
-const FIRST_WEEK_DAY = 1;
-const LAST_WEEK_DAY = 7;
-
 export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockData: MockServerData) {}
 
   public generate(): string {
     const name = getRandomItem<string>(this.mockData.names);
     const description = getRandomItem<string>(this.mockData.descriptions);
-
-    const createdAt = dayjs()
-      .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
-      .toISOString();
 
     const cityObj = getRandomItem<MockCity>(this.mockData.cities);
     const city = cityObj.name;
@@ -52,7 +44,6 @@ export class TSVOfferGenerator implements OfferGenerator {
     return [
       name,
       description,
-      createdAt,
       city,
       cityLatitude,
       cityLongitude,
