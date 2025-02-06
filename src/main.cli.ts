@@ -9,6 +9,7 @@ import {
 } from './cli/index.js';
 import { createUserContainer } from './shared/modules/user/index.js';
 import { createOfferContainer } from './shared/modules/offer/index.js';
+import { createCommentContainer } from './shared/modules/comment/index.js';
 
 import { Container } from 'inversify';
 import { Component } from './shared/types/index.js';
@@ -18,6 +19,7 @@ function bootstrap() {
     createCliApplicationContainer(),
     createUserContainer(),
     createOfferContainer(),
+    createCommentContainer(),
   );
 
   const cliApplication = appContainer.get<CLIApplication>(Component.CliApplication);

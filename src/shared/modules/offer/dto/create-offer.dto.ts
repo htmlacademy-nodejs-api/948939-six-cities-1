@@ -1,10 +1,9 @@
-import { OfferType, Amenities, User, City } from '../../../types/index.js';
+import { OfferType, Amenities, City } from '../../../types/index.js';
 import {
   IsEnum,
   IsString,
   IsInt,
   IsArray,
-  IsMongoId,
   IsNumber,
   IsLatitude,
   IsLongitude,
@@ -14,7 +13,9 @@ import {
   MinLength,
   MaxLength,
   ArrayMinSize,
-  ArrayMaxSize
+  ArrayMaxSize,
+  IsOptional,
+  IsMongoId
 } from 'class-validator';
 import { OfferMessage } from './offer.messages.js';
 
@@ -71,8 +72,9 @@ export class CreateOfferDto {
   @IsEnum(Amenities, {each: true, message: OfferMessage.amenities.invalid })
   public amenities!: Amenities[];
 
+  @IsOptional()
   @IsMongoId()
-  public userId!: User;
+  public userId!: string;
 
   @IsInt({ message: OfferMessage.commentsCount.invalidFormat })
   public commentsCount!: number;

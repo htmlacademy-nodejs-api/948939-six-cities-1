@@ -66,6 +66,9 @@ export class OfferEntity extends defaultClasses.TimeStamps {
 
   @prop({ required: true })
   public longitude!: number;
+
+  @prop({ ref: () => UserEntity })
+  public favoriteByUsers: UserEntity[] = [];
 }
 
 export const OfferModel = getModelForClass(OfferEntity);
